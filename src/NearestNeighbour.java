@@ -1,24 +1,28 @@
 
 public class NearestNeighbour {
 	
-	protected double totalDist;
+	private Tour tour;
 	
 	public NearestNeighbour() {
-		this.totalDist = 0;
+		this.tour = new Tour();
 	}
 	
 	public double getTotalDist() {
-		return this.totalDist;
+		return getTour().getDist();
 	}
 	
-	public void addToTotalDist(double dist) {
-		this.totalDist += dist;
+	public Tour getTour() {
+		return this.tour;
 	}
 	
-	public String getShortestRouteNN(Graph graph, City startingCity) {
+	public void resetTour() {
+		this.tour = new Tour();
+	}
+	
+	public Tour getShortestRouteNN(Graph graph, City startingCity) {
 		City currCity = startingCity;
 		City nextCity = null;
-		String route = "";
+		resetTour();
 		while(!graph.fullyVisited()) {
 			double shortestDist = 999;
 			for(City c : graph.getCities()) {
@@ -30,14 +34,12 @@ public class NearestNeighbour {
 				}
 			}
 			currCity.markAsVisited(true);
-			route += currCity.getName() + " ";
-			if(shortestDist != 999) {
-				addToTotalDist(shortestDist);
-			}
+			tour.add(currCity);
 			currCity = nextCity;
 		}
 		graph.resetVisits();
-		return route;
+		tour.completeTour();
+		return tour;
 	}
 	
 }

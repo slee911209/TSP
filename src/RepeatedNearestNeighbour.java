@@ -3,49 +3,33 @@ import java.util.Map.Entry;
 
 public class RepeatedNearestNeighbour extends NearestNeighbour {
 	
-	private HashMap<String, Double> routes;
-	private String shortestRoute;
-	private double shortestTotalDist;
+	private HashMap<Tour, Double> routes;
+	private Tour route;
 	
 	public RepeatedNearestNeighbour() {
 		routes = new HashMap<>();
-		shortestRoute = "";
-		shortestTotalDist = 999;
-	}
-	
-	public String getShortestRoute() {
-		return this.shortestRoute;
-	}
-	
-	public void setShortestRoute(String route) {
-		shortestRoute = route;
+		route = new Tour();
 	}
 	
 	public double getShortestTotalDist() {
-		return this.shortestTotalDist;
+		return this.route.getDist();
 	}
 	
-	public void setShortestTotalDist(double dist) {
-		shortestTotalDist = dist;
-	}
-	
-	public void resetTotalDistance() {
-		this.totalDist = 0;
-	}
-	
-	public String getShortestRouteRNN(Graph graph) {
+	public Tour getShortestRouteRNN(Graph graph) {
+		route = new Tour();
+		double shortestTotalDist = 999;
 		for(City city : graph.getCities()) {
-			String route = getShortestRouteNN(graph, city);
-			double dist = getTotalDist();
+			route = getShortestRouteNN(graph, city);
+			double dist = route.getDist();
 			routes.put(route, dist);
-			resetTotalDistance();
 		}
-		for(Entry<String, Double> entry : routes.entrySet()) {
-			if(entry.getValue() < getShortestTotalDist()) {
-				setShortestTotalDist(entry.getValue());
-				setShortestRoute(entry.getKey());
+		for(Entry<Tour, Double> entry : routes.entrySet()) {
+			if(entry.getValue() < shortestTotalDist) {
+				shortestTotalDist = entry.getValue();
+				route = entry.getKey(); 
 			}
 		}
-		return getShortestRoute();
+		route.completeTour();
+		return route;
 	}
 }

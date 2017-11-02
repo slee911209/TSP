@@ -6,6 +6,9 @@ public class City {
 	private String name;
 	private boolean visited;
 	
+	public City() {
+	}
+	
 	public City(String name, int x, int y) {
 		this.name = name;
 		this.x = x;
@@ -42,13 +45,27 @@ public class City {
 		return dist;
 	}
 	
+	@Override
 	//if name is the same, it is the same city as city name should be unique
-	public boolean equals(City city) {
-		if(this.getName().equals(city.getName())) {
+	public boolean equals(Object obj) {
+		if(this.getName().equals(((City)obj).getName())) {
 			return true;
 		}
 		return false;
 	}
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 * public boolean equals(Object obj) {
+23
+	        return (this.firstName.equals(((User) obj).firstName)
+24
+	                && this.lastName.equals(((User) obj).lastName) && this.email
+25
+	                    .equals(((User) obj).email));
+26
+	    }
+	 */
 	
 	public String toString() {
 		return getName() + ": (" + getX() + ", " + getY() + ")"; 
