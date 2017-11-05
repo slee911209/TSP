@@ -52,7 +52,7 @@ public class VertexInsertion {
 	}
 	
 	public void createTour() {
-		System.out.println("Creating Tour");
+		//System.out.println("Creating Tour");
 		ArrayList<Edge> edges = new ArrayList<>();
 
 		for (Edge e : subgraph.getEdges()) {
@@ -80,24 +80,6 @@ public class VertexInsertion {
 			}
 		}
 		tour.completeTour();
-		/*
-		tour.add(subgraph.getEdges().get(0).getCities()[0]);
-		tour.add(subgraph.getEdges().get(0).getCities()[1]);
-		while(tour.getList().size() != subgraph.getNOfCities()) {
-			for(int i = 1; i < subgraph.getEdges().size(); i++) {
-				if(tour.getList().getLast().equals(subgraph.getEdges().get(i).getCities()[0])) {
-					if(!tour.contains(subgraph.getEdges().get(i).getCities()[1])) {
-						tour.add(subgraph.getEdges().get(i).getCities()[1]);
-					}
-				}
-				if(tour.getList().getLast().equals(subgraph.getEdges().get(i).getCities()[1])) {
-					if(!tour.contains(subgraph.getEdges().get(i).getCities()[0])) {
-						tour.add(subgraph.getEdges().get(i).getCities()[0]);
-					}
-				}
-			}
-		}
-		tour.completeTour();*/
 	}
 	
 	public City chooseNextCity() {

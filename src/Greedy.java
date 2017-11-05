@@ -44,11 +44,11 @@ public class Greedy {
 				break;
 			}
 		}
-
+/*
 		for (Edge e : subgraph.getEdges()) {
 			System.out.println(":" + e);
 		}
-
+*/
 		addLastEdge();
 		createTour();
 		return tour;
@@ -72,7 +72,6 @@ public class Greedy {
 		return true;
 	}
 
-	// TODO
 	public boolean createSubtour() {
 
 		if (subgraph.getEdges().size() == 0) {
@@ -114,8 +113,8 @@ public class Greedy {
 				subtours.add(subtour);
 				if (!edges.isEmpty()) {
 					subtour = new Tour();
-					subtour.add(subgraph.getEdges().get(0).getCities()[1]);
-					subtour.add(subgraph.getEdges().get(0).getCities()[0]);
+					subtour.add(edges.get(0).getCities()[1]);
+					subtour.add(edges.get(0).getCities()[0]);
 					edges.remove(0);
 				}
 			}
@@ -123,26 +122,21 @@ public class Greedy {
 		if (subtours.isEmpty() || subtour.getList().size() == 2) {
 			subtours.add(subtour);
 		}
-		// System.out.println(subtours.size());
-		if (subtours.size() == 1) {
-			if (subtour.getList().getFirst().equals(subtour.getList().getLast())
-					&& subtour.getList().size() != (subgraph.getNOfCities() + 1)) {
-				return true;
-			}
+		if(subtour.getList().getFirst().equals(subtour.getList().getLast())) {
+			return true;
 		}
-
 		for (Tour t : subtours) {
 			if (t.getList().getFirst().equals(t.getList().getLast())) {
 				return true;
 			}
 		}
-
+		
 		return false;
 	}
 
 	public void createTour() {
 
-		System.out.println("Creating Tour");
+		//System.out.println("Creating Tour");
 		ArrayList<Edge> edges = new ArrayList<>();
 
 		for (Edge e : subgraph.getEdges()) {
@@ -185,7 +179,7 @@ public class Greedy {
 			}
 		}
 		Edge e = new Edge(lastEdge[0], lastEdge[1]);
-		System.out.println(e);
+		//System.out.println(e);
 		if (!subgraph.getEdges().contains(e)) {
 			subgraph.addEdge(e);
 		}
