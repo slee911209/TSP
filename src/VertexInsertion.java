@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /*
  *1. Select the shortest edge, and make a subtour of it.
  *2. Select a city not in the subtour, having the shortest distance to any one of the cities in the subtoor.
@@ -44,11 +46,41 @@ public class VertexInsertion {
 			nextCity = chooseNextCity();
 			insertCity(nextCity);
 		}
+		addLastEdge();
 		createTour();
 		return tour;
 	}
 	
 	public void createTour() {
+		System.out.println("Creating Tour");
+		ArrayList<Edge> edges = new ArrayList<>();
+
+		for (Edge e : subgraph.getEdges()) {
+			edges.add(e);
+		}
+
+		tour.add(subgraph.getEdges().get(0).getCities()[0]);
+		tour.add(subgraph.getEdges().get(0).getCities()[1]);
+		edges.remove(subgraph.getEdges().get(0));
+
+		while (!edges.isEmpty()) {
+			for (Edge e : subgraph.getEdges()) {
+				if (tour.getList().getLast().equals(e.getCities()[0])) {
+					if (edges.contains(e)) {
+						tour.add(e.getCities()[1]);
+						edges.remove(e);
+					}
+				}
+				if (tour.getList().getLast().equals(e.getCities()[1])) {
+					if (edges.contains(e)) {
+						tour.add(e.getCities()[0]);
+						edges.remove(e);
+					}
+				}
+			}
+		}
+		tour.completeTour();
+		/*
 		tour.add(subgraph.getEdges().get(0).getCities()[0]);
 		tour.add(subgraph.getEdges().get(0).getCities()[1]);
 		while(tour.getList().size() != subgraph.getNOfCities()) {
@@ -65,7 +97,7 @@ public class VertexInsertion {
 				}
 			}
 		}
-		tour.completeTour();
+		tour.completeTour();*/
 	}
 	
 	public City chooseNextCity() {
@@ -97,5 +129,34 @@ public class VertexInsertion {
 		subgraph.addCity(city);
 		subgraph.addEdge(new Edge(e.getCities()[0], city));
 		subgraph.addEdge(new Edge(e.getCities()[1], city));
+	}
+	
+	public void addLastEdge() {
+		City[] lastEdge = new City[2];
+		int i = 0;
+		for (City c : subgraph.getCities()) {
+			if (getNOfEdges(c) != 2) {
+				lastEdge[i] = c;
+				if (i == 1) {
+					break;
+				}
+				i++;
+			}
+		}
+		Edge e = new Edge(lastEdge[0], lastEdge[1]);
+		//System.out.println(e);
+		if (!subgraph.getEdges().contains(e)) {
+			subgraph.addEdge(e);
+		}
+	}
+	
+	public int getNOfEdges(City c) {
+		int counter = 0;
+		for (Edge e : subgraph.getEdges()) {
+			if (e.contains(c)) {
+				counter++;
+			}
+		}
+		return counter;
 	}
 }

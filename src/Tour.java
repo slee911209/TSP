@@ -1,7 +1,5 @@
 import java.util.LinkedList;
 
-import javafx.scene.Node;
-
 public class Tour {
 	private LinkedList<City> tour;
 	

@@ -4,21 +4,18 @@ import java.util.Comparator;
 
 public class Graph {
 
-	protected int nOfCities;
 	protected ArrayList<City> cities;
 	protected ArrayList<Edge> edges;
 	
 	public Graph() {
-		this.nOfCities = 0;
 		cities = new ArrayList<>();
 		edges = new ArrayList<>();
 	}
 	
 	public Graph(int nOfCities) {
-		this.nOfCities = nOfCities;
 		cities = new ArrayList<>();
 		edges = new ArrayList<>();
-		createRandomCities();
+		createRandomCities(nOfCities);
 		fillEdges();
 		sortEdges();
 	}
@@ -40,7 +37,7 @@ public class Graph {
 			cities.add(city);
 		}
 	}
-	public void createRandomCities() {
+	public void createRandomCities(int nOfCities) {
 		for(int i = 0; i < nOfCities; i++) {
 			cities.add(new City("c" + i, (int) (Math.random()*100 + 1), (int) (Math.random()*100 + 1)));
 		}

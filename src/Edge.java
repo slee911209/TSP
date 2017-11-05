@@ -33,7 +33,22 @@ public class Edge {
 		}
 		return false;
 	}
+	
+	public boolean contains(City c) {
+		if(edge[0] == c || edge[1] == c) {
+			return true;
+		}
+		return false;
+	}
 
+	@Override
+	public boolean equals(Object o) {
+		if(this.edge[0] == ((Edge)o).edge[0] && this.edge[1] == ((Edge)o).edge[1]) {
+			return true;
+		}
+		return false;
+	}
+	
 	public String toString() {
 		return "(" + edge[0] + ", " + edge[1] + ") :" + getDist();
 	}
